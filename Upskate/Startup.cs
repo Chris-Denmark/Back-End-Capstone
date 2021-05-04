@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Upskate.Repositories;
 
 namespace Upskate
 {
@@ -34,6 +35,8 @@ namespace Upskate
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Upskate", Version = "v1" });
             });
+
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
