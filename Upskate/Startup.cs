@@ -38,6 +38,7 @@ namespace Upskate
 
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IBoardRepository, BoardRepository>();
+            services.AddTransient<IUpkeepRepository, UpkeepRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
