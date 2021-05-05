@@ -169,7 +169,7 @@ namespace Upskate.Repositories
             }
         }
 
-        public void DeleteBoard(int id)
+        public void DeleteUpkeep(int id)
         {
             using (var conn = Connection)
             {
@@ -179,16 +179,6 @@ namespace Upskate.Repositories
                 {
                     cmd.CommandText = @"
                         DELETE  FROM Upkeep
-                        WHERE   BoardId = @id";
-
-                    DbUtils.AddParameter(cmd, "@Id", id);
-
-                    cmd.ExecuteNonQuery();
-                }
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        DELETE  FROM Board
                         WHERE   Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -198,30 +188,34 @@ namespace Upskate.Repositories
             }
         }
 
-        private Board NewBoardFromReader(SqlDataReader reader)
+        private Upkeep NewUpkeepFromReader(SqlDataReader reader)
         {
-            return new Board()
+            return new Upkeep()
             {
                 Id = reader.GetInt32(reader.GetOrdinal("BoardId")),
-                Name = reader.GetString(reader.GetOrdinal("BoardName")),
-                BoardTypeId = reader.GetInt32(reader.GetOrdinal("BoardType")),
-                BoardType = new BoardType()
+                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                Category = new Category()
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("BoardTypeId")),
-                    Name = reader.GetString(reader.GetOrdinal("BoardTypeName"))
+                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
                 },
-                DeckMaterialId = reader.GetInt32(reader.GetOrdinal("DeckMaterial")),
-                DeckMaterial = new DeckMaterial()
+                Description = reader.GetString(reader.GetOrdinal("UpkeepDescription")),
+                DateCompleted = reader.GetDateTime(reader.GetOrdinal("UpkeepDateCompleted")),
+                BoardId = reader.GetInt32(reader.GetOrdinal("UpkeepBoardId")),
+                Board = new Board()
                 {
-                    Id = reader.GetInt32(reader.GetOrdinal("DeckMaterialId")),
-                    Name = reader.GetString(reader.GetOrdinal("DeckMaterialName"))
+                    Id = reader.GetInt32(reader.GetOrdinal("BoardId")),
+                    Name = reader.GetString(reader.GetOrdinal("BoardName")),
+                    BoardTypeId = reader.GetInt32(reader.GetOrdinal("BoardTypeId")),
+                    DeckMaterialId = reader.GetInt32(reader.GetOrdinal("BoardDeckMaterialId")),
+                    UserProfileId = reader.GetInt32(reader.GetOrdinal("BoardUserProfileId")),
                 },
-                UserProfileId = reader.GetInt32(reader.GetOrdinal("BoardUserProfileId")),
+                UserProfileId = reader.GetInt32(reader.GetOrdinal("UpkeepUserProfileId")),
                 UserProfile = new UserProfile()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                    Email = reader.GetString(reader.GetOrdinal("Email")),
-                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                    Email = reader.GetString(reader.GetOrdinal("UserProfileEmail")),
+                    DisplayName = reader.GetString(reader.GetOrdinal("UserProfileDisplayName")),
                 }
             };
         }
