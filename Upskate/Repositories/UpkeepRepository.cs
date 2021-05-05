@@ -140,7 +140,7 @@ namespace Upskate.Repositories
             }
         }
 
-        public void UpdateBoard(Board board)
+        public void UpdateUpkeep(Upkeep upkeep)
         {
             using (var conn = Connection)
             {
@@ -148,19 +148,21 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    UPDATE Board
-                        SET Name = @Name,
-                            BoardTypeId = @BoardTypeId,
-                            DeckMaterialId = @DeckMaterialId,
+                    UPDATE Upkeep
+                        SET CategoryId = @CategoryId,
+                            Description = @Description,
+                            DateCompleted = @DateCompleted,
+                            BoardId = @BoardId
                             UserProfileId = @UserProfileId
                     WHERE Id = @Id
                     ";
 
-                    cmd.Parameters.AddWithValue("@Name", board.Name);
-                    cmd.Parameters.AddWithValue("@BoardTypeId", board.BoardTypeId);
-                    cmd.Parameters.AddWithValue("@DeckMaterialId", board.DeckMaterialId);
-                    cmd.Parameters.AddWithValue("@UserProfileId", board.UserProfileId);
-                    cmd.Parameters.AddWithValue("@Id", board.Id);
+                    cmd.Parameters.AddWithValue("@CategoryId", upkeep.CategoryId);
+                    cmd.Parameters.AddWithValue("@Description", upkeep.Description);
+                    cmd.Parameters.AddWithValue("@DateCompleted", DbUtils.ValueOrDBNull(upkeep.DateCompleted));
+                    cmd.Parameters.AddWithValue("@BoardId", upkeep.BoardId);
+                    cmd.Parameters.AddWithValue("@UserProfileId", upkeep.UserProfileId);
+                    cmd.Parameters.AddWithValue("@Id", upkeep.Id);
 
                     cmd.ExecuteNonQuery();
                 }
