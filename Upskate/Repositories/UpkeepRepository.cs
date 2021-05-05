@@ -9,7 +9,7 @@ using Upskate.Utils;
 
 namespace Upskate.Repositories
 {
-    public class UpkeepRepository : BaseRepository
+    public class UpkeepRepository : BaseRepository, IUpkeepRepository
     {
         public UpkeepRepository(IConfiguration configuration) : base(configuration) { }
 
