@@ -23,8 +23,8 @@ VALUES
   (3, 'Composite'),
   (4, 'Plastic');
 SET IDENTITY_INSERT [DeckMaterial] OFF
-SET IDENTITY_INSERT [Type] ON
-INSERT INTO [Type]
+SET IDENTITY_INSERT [BoardType] ON
+INSERT INTO [BoardType]
   ([Id], [Name])
 VALUES
   (1, 'Longboard'),
@@ -32,10 +32,10 @@ VALUES
   (3, 'Penny Board'),
   (4, 'Nickel Board'),
   (5, 'Old School Board');
-  SET IDENTITY_INSERT [Type] OFF
+  SET IDENTITY_INSERT [BoardType] OFF
 SET IDENTITY_INSERT [Board] ON
 INSERT INTO [Board]
-  ([Id], [Name], [TypeId], [DeckMaterialId], [UserProfileId])
+  ([Id], [Name], [BoardTypeId], [DeckMaterialId], [UserProfileId])
 VALUES
   (1, 'C board', 1, 2, 1),
   (2, 'T board', 1, 3, 2);

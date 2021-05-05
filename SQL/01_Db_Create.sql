@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS [UserProfile];
 DROP TABLE IF EXISTS [Board];
 DROP TABLE IF EXISTS [Upkeep];
 DROP TABLE IF EXISTS [Category];
-DROP TABLE IF EXISTS [Type];
+DROP TABLE IF EXISTS [BoardType];
 DROP TABLE IF EXISTS [DeckMaterial];
 
 CREATE TABLE [UserProfile] (
@@ -24,7 +24,7 @@ GO
 CREATE TABLE [Board] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [Name] nvarchar(255) NOT NULL,
-  [TypeId] integer NOT NULL,
+  [BoardTypeId] integer NOT NULL,
   [DeckMaterialId] integer NOT NULL,
   [UserProfileId] integer NOT NULL
 )
@@ -46,7 +46,7 @@ CREATE TABLE [Category] (
 )
 GO
 
-CREATE TABLE [Type] (
+CREATE TABLE [BoardType] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [Name] nvarchar(255) NOT NULL
 )
@@ -70,7 +70,7 @@ GO
 ALTER TABLE [Board] ADD FOREIGN KEY ([DeckMaterialId]) REFERENCES [DeckMaterial] ([Id])
 GO
 
-ALTER TABLE [Board] ADD FOREIGN KEY ([TypeId]) REFERENCES [Type] ([Id])
+ALTER TABLE [Board] ADD FOREIGN KEY ([BoardTypeId]) REFERENCES [BoardType] ([Id])
 GO
 
 ALTER TABLE [Board] ADD FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])
