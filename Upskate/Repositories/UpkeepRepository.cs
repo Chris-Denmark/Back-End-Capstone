@@ -62,7 +62,7 @@ namespace Upskate.Repositories
         }
 
         /// <summary>
-        ///  Fetch a Board by Id. Uses NewBoardFromReader method to create new Board "object"
+        ///  Fetch an Upkeep by Id. Uses NewUpkeepFromReader method to create new Upkeep "object"
         /// </summary>
         public Upkeep GetUpkeepById(int id)
         {
@@ -113,10 +113,10 @@ namespace Upskate.Repositories
         }
 
         /// <summary>
-        /// Adds a Board to the database.
+        /// Adds an Upkeep to the database.
         /// </summary>
-        /// <param name="board"></param>
-        public int AddBoard(Board board)
+        /// <param name="upkeep"></param>
+        public int AddUpkeep(Upkeep upkeep)
         {
             using (var conn = Connection)
             {
@@ -124,17 +124,18 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Board (
-                            Name, BoardTypeId, DeckMaterialId, UserProfileId )
+                        INSERT INTO Upkeep (
+                            CategoryId, Description, DateCompleted, BoardId, UserProfileId )
                         OUTPUT INSERTED.ID
                         VALUES (
-                            @Name, @BoardTypeId, @DeckMaterialId, @UserProfileId )";
-                    DbUtils.AddParameter(cmd, "@Name", board.Name);
-                    DbUtils.AddParameter(cmd, "@BoardTypeId", board.BoardTypeId);
-                    DbUtils.AddParameter(cmd, "@DeckMaterialId", board.DeckMaterialId);
-                    DbUtils.AddParameter(cmd, "@UserProfileId", board.UserProfileId);
+                            @CategoryId, @Description, @DateCompleted, @BoardId, @UserProfileId )";
+                    DbUtils.AddParameter(cmd, "@CategoryId", upkeep.CategoryId);
+                    DbUtils.AddParameter(cmd, "@Description", upkeep.Description);
+                    DbUtils.AddParameter(cmd, "@DateCompleted", upkeep.DateCompleted);
+                    DbUtils.AddParameter(cmd, "@BoardId", upkeep.BoardId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", upkeep.UserProfileId);
 
-                    return board.Id = (int)cmd.ExecuteScalar();
+                    return upkeep.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }
