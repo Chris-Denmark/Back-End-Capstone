@@ -64,7 +64,7 @@ namespace Upskate.Repositories
         /// <summary>
         ///  Fetch a Board by Id. Uses NewBoardFromReader method to create new Board "object"
         /// </summary>
-        public Board GetUpkeepById(int id)
+        public Upkeep GetUpkeepById(int id)
         {
             using (var conn = Connection)
             {
@@ -72,29 +72,42 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT b.Id AS BoardId, b.[Name] AS BoardName, b.BoardTypeId AS BoardType, 
-                              b.DeckMaterialId AS DeckMaterial,
-                              b.UserProfileId AS BoardUserProfileId, u.Id AS UserProfileId, u.DisplayName, u.Email, 
-                              dm.Id AS DeckMaterialId, dm.[Name] AS DeckMaterialName, t.Id AS BoardTypeId, t.[Name] AS BoardTypeName
-                        FROM Board b
-                            LEFT JOIN UserProfile u ON b.UserProfileId = u.Id
-                            LEFT JOIN DeckMaterial dm ON b.DeckMaterialId = dm.Id
-                            LEFT JOIN BoardType t ON b.BoardTypeId = t.Id
-                        WHERE b.Id = @id";
+                    SELECT up.Id AS UpkeepId,
+                           up.CategoryId AS UpkeepCategoryId,
+                           up.Description AS UpkeepDescription, 
+                           up.DateCompleted AS UpkeepDateCompleted,
+                           up.BoardId AS UpkeepBoardId,
+                           up.UserProfileId AS UpkeepUserProfileId,
+                           c.[Name] AS CategoryName,
+                           c.Id AS CategoryId, 
+                           b.Id AS BoardId,
+                           b.[Name] AS BoardName,
+                           b.TypeId AS BoardTypeId,
+                           b.DeckMaterialId AS BoardDeckMaterialId,
+                           b.UserProfileId AS BoardUserProfileId,
+                           u.Id AS UserProfileId,
+                           u.Email AS UserProfileEmail,
+                           u.FirebaseUserId AS UserProfileFirebaseUserId,
+                           u.DisplayName AS UserProfileDisplayName
+                    FROM Upkeep up
+                            LEFT JOIN UserProfile u ON up.UserProfileId = u.Id
+                            LEFT JOIN Board b ON up.BoardId = b.Id
+                            LEFT JOIN Category c ON up.CategoryId = c.Id
+                    WHERE up.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
-                    Board board = null;
+                    Upkeep upkeep = null;
 
                     if (reader.Read())
                     {
-                        board = NewBoardFromReader(reader);
+                        upkeep = NewUpkeepFromReader(reader);
                     }
 
                     reader.Close();
 
-                    return board;
+                    return upkeep;
                 }
             }
         }
