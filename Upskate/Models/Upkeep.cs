@@ -13,6 +13,8 @@ namespace Upskate.Models
         [Required]
         public int CategoryId { get; set; }
 
+        public Category Category { get; set; }
+
         [Required]
         public string Description { get; set; }
 
@@ -22,6 +24,10 @@ namespace Upskate.Models
         [Required]
         public int BoardId { get; set; }
 
+        public Board Board { get; set; }
+
         public int UserProfileId { get; set; }
+
+        public UserProfile UserProfile { get; set; }
     }
 }
