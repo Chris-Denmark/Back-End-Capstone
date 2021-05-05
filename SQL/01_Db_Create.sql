@@ -6,14 +6,14 @@ GO
 USE [Upskate]
 GO
 
-DROP TABLE IF EXISTS [User];
+DROP TABLE IF EXISTS [UserProfile];
 DROP TABLE IF EXISTS [Board];
 DROP TABLE IF EXISTS [Upkeep];
 DROP TABLE IF EXISTS [Category];
 DROP TABLE IF EXISTS [Type];
 DROP TABLE IF EXISTS [DeckMaterial];
 
-CREATE TABLE [User] (
+CREATE TABLE [UserProfile] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [Email] nvarchar(255) NOT NULL,
   [FirebaseUserId] nvarchar(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE [Board] (
   [Name] nvarchar(255) NOT NULL,
   [TypeId] integer NOT NULL,
   [DeckMaterialId] integer NOT NULL,
-  [UserId] integer NOT NULL
+  [UserProfileId] integer NOT NULL
 )
 GO
 
@@ -36,7 +36,7 @@ CREATE TABLE [Upkeep] (
   [Description] nvarchar(255) NOT NULL,
   [DateCompleted] datetime,
   [BoardId] integer NOT NULL,
-  [UserId] integer NOT NULL
+  [UserProfileId] integer NOT NULL
 )
 GO
 
@@ -58,20 +58,20 @@ CREATE TABLE [DeckMaterial] (
 )
 GO
 
-ALTER TABLE [Upkeep] ADD FOREIGN KEY ([userId]) REFERENCES [User] ([id])
+ALTER TABLE [Upkeep] ADD FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])
 GO
 
-ALTER TABLE [Upkeep] ADD FOREIGN KEY ([categoryid]) REFERENCES [Category] ([id])
+ALTER TABLE [Upkeep] ADD FOREIGN KEY ([Categoryid]) REFERENCES [Category] ([Id])
 GO
 
-ALTER TABLE [Upkeep] ADD FOREIGN KEY ([boardId]) REFERENCES [Board] ([id])
+ALTER TABLE [Upkeep] ADD FOREIGN KEY ([BoardId]) REFERENCES [Board] ([Id])
 GO
 
-ALTER TABLE [Board] ADD FOREIGN KEY ([deckMaterialId]) REFERENCES [deckMaterial] ([id])
+ALTER TABLE [Board] ADD FOREIGN KEY ([DeckMaterialId]) REFERENCES [DeckMaterial] ([Id])
 GO
 
-ALTER TABLE [Board] ADD FOREIGN KEY ([typeId]) REFERENCES [type] ([id])
+ALTER TABLE [Board] ADD FOREIGN KEY ([TypeId]) REFERENCES [Type] ([Id])
 GO
 
-ALTER TABLE [Board] ADD FOREIGN KEY ([userId]) REFERENCES [User] ([id])
+ALTER TABLE [Board] ADD FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])
 GO

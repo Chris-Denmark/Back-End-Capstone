@@ -20,7 +20,7 @@ namespace Upskate.Repositories
                     cmd.CommandText = @"
                         SELECT Id, FirebaseUserId, DisplayName, 
                                Email, 
-                        FROM User
+                        FROM UserProfile
                         WHERE FirebaseUserId = @FirebaseuserId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
@@ -74,7 +74,7 @@ namespace Upskate.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT Id, DisplayName, Email
-                        FROM User 
+                        FROM UserProfile
                         ORDER BY DisplayName ASC
                     ";
 
@@ -128,7 +128,7 @@ namespace Upskate.Repositories
                 {
                     cmd.CommandText = @"
                        SELECT Id, DisplayName, Email,
-                         FROM User
+                         FROM UserProfile
                         WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -152,6 +152,45 @@ namespace Upskate.Repositories
             }
         }
 
+        public void DeleteUserProfile(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE  FROM Board
+                        WHERE   UserProfileId = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE  FROM Upkeep
+                        WHERE   UserProfileId = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE  FROM UserProfile
+                        WHERE   Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         //public void ReactivateUserById(int id)
         //{
         //    using (var conn = Connection)
@@ -160,7 +199,7 @@ namespace Upskate.Repositories
         //        using (var cmd = conn.CreateCommand())
         //        {
         //            cmd.CommandText = @"
-        //            UPDATE User
+        //            UPDATE UserProfile
         //                SET Deactivated = 0
         //            WHERE Id = @id
         //            ";
@@ -181,7 +220,7 @@ namespace Upskate.Repositories
         //        {
         //            cmd.CommandText = @"
         //                SELECT Id, DisplayName, Email,
-        //                FROM User
+        //                FROM UserProfile
         //                      WHERE Deactivated = 1
         //                      ORDER BY DisplayName ASC
         //            ";
