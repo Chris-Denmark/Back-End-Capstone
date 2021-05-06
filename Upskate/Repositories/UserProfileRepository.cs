@@ -99,26 +99,6 @@ namespace Upskate.Repositories
             }
         }
 
-        //public void DeactivateUserById(int id)
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (var cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //            UPDATE User
-        //                SET Deactivated = 1
-        //            WHERE Id = @id
-        //            ";
-
-        //            DbUtils.AddParameter(cmd, "id", id);
-
-        //            cmd.ExecuteNonQuery();
-        //        };
-        //    }
-        //}
-
         public UserProfile GetUserProfileById(int id)
         {
             using (var conn = Connection)
@@ -190,75 +170,5 @@ namespace Upskate.Repositories
                 }
             }
         }
-
-        //public void ReactivateUserById(int id)
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (var cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //            UPDATE UserProfile
-        //                SET Deactivated = 0
-        //            WHERE Id = @id
-        //            ";
-
-        //            DbUtils.AddParameter(cmd, "@id", id);
-
-        //            cmd.ExecuteNonQuery();
-        //        };
-        //    }
-        //}
-
-        //public List<UserProfile> GetDeactivatedUserProfiles()
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (var cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //                SELECT Id, DisplayName, Email,
-        //                FROM UserProfile
-        //                      WHERE Deactivated = 1
-        //                      ORDER BY DisplayName ASC
-        //            ";
-
-        //            SqlDataReader reader = cmd.ExecuteReader();
-        //            List<UserProfile> profiles = new List<UserProfile>();
-
-        //            while (reader.Read())
-        //            {
-        //                UserProfile profile = new UserProfile
-        //                {
-        //                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-        //                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
-        //                    Email = reader.GetString(reader.GetOrdinal("Email")),
-        //                };
-
-        //                profiles.Add(profile);
-        //            }
-
-        //            reader.Close();
-        //            return profiles;
-        //        }
-        //    }
-        //}
-
-        /*
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
-        {
-            return _context.UserProfile
-                       .Include(up => up.UserType) 
-                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
-        }
-
-        public void Add(UserProfile userProfile)
-        {
-            _context.Add(userProfile);
-            _context.SaveChanges();
-        }
-        */
     }
 }
