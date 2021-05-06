@@ -19,7 +19,7 @@ namespace Upskate.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT Id, FirebaseUserId, DisplayName, 
-                               Email, 
+                               Email 
                         FROM UserProfile
                         WHERE FirebaseUserId = @FirebaseuserId";
 
@@ -127,7 +127,7 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT Id, DisplayName, Email,
+                       SELECT Id, DisplayName, Email
                          FROM UserProfile
                         WHERE Id = @id";
 
