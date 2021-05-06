@@ -31,17 +31,23 @@ namespace Upskate.Repositories
                            c.Id AS CategoryId, 
                            b.Id AS BoardId,
                            b.[Name] AS BoardName,
-                           b.TypeId AS BoardTypeId,
+                           b.BoardTypeId AS BoardTypeId,
                            b.DeckMaterialId AS BoardDeckMaterialId,
                            b.UserProfileId AS BoardUserProfileId,
                            u.Id AS UserProfileId,
                            u.Email AS UserProfileEmail,
                            u.FirebaseUserId AS UserProfileFirebaseUserId,
-                           u.DisplayName AS UserProfileDisplayName
+                           u.DisplayName AS UserProfileDisplayName,
+                           dm.Id AS DeckMaterialId,
+                           dm.Name AS DeckMaterialName,
+                           bt.Id AS BoardTypeId,
+                           bt.Name AS BoardTypeName
                     FROM Upkeep up
                             LEFT JOIN UserProfile u ON up.UserProfileId = u.Id
                             LEFT JOIN Board b ON up.BoardId = b.Id
                             LEFT JOIN Category c ON up.CategoryId = c.Id
+                            LEFT JOIN DeckMaterial dm ON b.DeckMaterialId = dm.Id
+                            LEFT JOIN BoardType bt ON b.BoardTypeId = bt.Id
                     WHERE up.UserProfileId = @id
                     ";
 
@@ -82,17 +88,23 @@ namespace Upskate.Repositories
                            c.Id AS CategoryId, 
                            b.Id AS BoardId,
                            b.[Name] AS BoardName,
-                           b.TypeId AS BoardTypeId,
+                           b.BoardTypeId AS BoardTypeId,
                            b.DeckMaterialId AS BoardDeckMaterialId,
                            b.UserProfileId AS BoardUserProfileId,
                            u.Id AS UserProfileId,
                            u.Email AS UserProfileEmail,
                            u.FirebaseUserId AS UserProfileFirebaseUserId,
-                           u.DisplayName AS UserProfileDisplayName
+                           u.DisplayName AS UserProfileDisplayName,
+                           dm.Id AS DeckMaterialId,
+                           dm.Name AS DeckMaterialName,
+                           bt.Id AS BoardTypeId,
+                           bt.Name AS BoardTypeName
                     FROM Upkeep up
                             LEFT JOIN UserProfile u ON up.UserProfileId = u.Id
                             LEFT JOIN Board b ON up.BoardId = b.Id
                             LEFT JOIN Category c ON up.CategoryId = c.Id
+                            LEFT JOIN DeckMaterial dm ON b.DeckMaterialId = dm.Id
+                            LEFT JOIN BoardType bt ON b.BoardTypeId = bt.Id
                     WHERE up.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -152,7 +164,7 @@ namespace Upskate.Repositories
                         SET CategoryId = @CategoryId,
                             Description = @Description,
                             DateCompleted = @DateCompleted,
-                            BoardId = @BoardId
+                            BoardId = @BoardId,
                             UserProfileId = @UserProfileId
                     WHERE Id = @Id
                     ";
@@ -207,7 +219,17 @@ namespace Upskate.Repositories
                     Id = reader.GetInt32(reader.GetOrdinal("BoardId")),
                     Name = reader.GetString(reader.GetOrdinal("BoardName")),
                     BoardTypeId = reader.GetInt32(reader.GetOrdinal("BoardTypeId")),
+                    BoardType = new BoardType()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("BoardTypeId")),
+                        Name = reader.GetString(reader.GetOrdinal("BoardTypeName")),
+                    },
                     DeckMaterialId = reader.GetInt32(reader.GetOrdinal("BoardDeckMaterialId")),
+                    DeckMaterial = new DeckMaterial()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("DeckMaterialId")),
+                        Name = reader.GetString(reader.GetOrdinal("DeckMaterialName")),
+                    },
                     UserProfileId = reader.GetInt32(reader.GetOrdinal("BoardUserProfileId")),
                 },
                 UserProfileId = reader.GetInt32(reader.GetOrdinal("UpkeepUserProfileId")),
