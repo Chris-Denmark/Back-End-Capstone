@@ -6,17 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Upskate.Models;
 using Upskate.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Upskate.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UpkeepController : ControllerBase
     {
         private readonly IUpkeepRepository _upkeepRepository;
-        public UpkeepController(IUpkeepRepository upkeepRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public UpkeepController(IUpkeepRepository upkeepRepository, IUserProfileRepository userProfileRepository)
         {
             _upkeepRepository = upkeepRepository;
+            _userProfileRepository = userProfileRepository;
 
         }
 
@@ -24,8 +29,6 @@ namespace Upskate.Controllers
         public IActionResult Get(int id)
         {
             var upkeep = _upkeepRepository.GetUpkeepById(id);
-
-
             return Ok(upkeep);
 
         }
@@ -33,6 +36,8 @@ namespace Upskate.Controllers
         [HttpPost]
         public IActionResult Post(Upkeep upkeep)
         {
+            var currentUserProfile = GetCurrentUserProfile();
+            upkeep.UserProfileId = currentUserProfile.Id;
             _upkeepRepository.AddUpkeep(upkeep);
             return CreatedAtAction("Get", new { id = upkeep.Id }, upkeep);
         }
@@ -52,9 +57,8 @@ namespace Upskate.Controllers
         [HttpGet("GetAllUpkeepsByUserId")]
         public IActionResult GetAllUpkeepsByUserId(int id)
         {
-            var upkeeps = _upkeepRepository.GetCurrentUserUpkeeps(id);
-            return Ok(upkeeps);
-
+            UserProfile user = GetCurrentUserProfile();
+            return Ok(_upkeepRepository.GetCurrentUserUpkeeps(user.Id));
         }
 
         [HttpDelete("{id}")]
@@ -62,6 +66,13 @@ namespace Upskate.Controllers
         {
             _upkeepRepository.DeleteUpkeep(id);
             return NoContent();
+        }
+
+        // Retrieves the current user object by using the provided firebaseId
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

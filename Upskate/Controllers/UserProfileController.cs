@@ -6,7 +6,7 @@ using Upskate.Repositories;
 
 namespace Upskate.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase

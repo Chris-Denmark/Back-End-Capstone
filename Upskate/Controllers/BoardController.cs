@@ -4,18 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using Upskate.Models;
 using Upskate.Repositories;
+using System.Security.Claims;
 
 namespace Upskate.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BoardController : ControllerBase
     {
         private readonly IBoardRepository _boardRepository;
-        public BoardController(IBoardRepository boardRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public BoardController(IBoardRepository boardRepository, IUserProfileRepository userProfileRepository)
         {
             _boardRepository = boardRepository;
+            _userProfileRepository = userProfileRepository;
 
         }
 
@@ -33,8 +36,6 @@ namespace Upskate.Controllers
         public IActionResult Get(int id)
         {
             var board = _boardRepository.GetBoardById(id);
-
-
             return Ok(board);
 
         }
@@ -42,6 +43,8 @@ namespace Upskate.Controllers
         [HttpPost]
         public IActionResult Post(Board board)
         {
+            var currentUserProfile = GetCurrentUserProfile();
+            board.UserProfileId = currentUserProfile.Id;
             _boardRepository.AddBoard(board);
             return CreatedAtAction("Get", new { id = board.Id }, board);
         }
@@ -61,8 +64,8 @@ namespace Upskate.Controllers
         [HttpGet("GetAllBoardsByUserId")]
         public IActionResult GetAllBoardsByUserId(int id)
         {
-            var boards = _boardRepository.GetCurrentUserBoards(id);
-            return Ok(boards);
+            UserProfile user = GetCurrentUserProfile();
+            return Ok(_boardRepository.GetCurrentUserBoards(user.Id));
 
         }
 
@@ -71,6 +74,13 @@ namespace Upskate.Controllers
         {
             _boardRepository.DeleteBoard(id);
             return NoContent();
+        }
+
+        // Retrieves the current user object by using the provided firebaseId
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
