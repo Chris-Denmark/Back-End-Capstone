@@ -47,12 +47,15 @@ const Board = ({ board }) => {
             <CardSubtitle tag="h6" className="mb-2 text-muted">
               Deck Material: {board.deckMaterial.name}
             </CardSubtitle>
+            <CardSubtitle tag="h6" className="mb-2 text-muted">
+              Board Type: {board.boardType.name}
+            </CardSubtitle>
           </Link>
           <div style={{ float: "right" }}>
-            <Button onClick={editPost}>Edit</Button>
+            <Button onClick={editBoard}>Edit</Button>
             <Button
               color="danger"
-              onClick={() => handleDeletePost(post.title)}
+              onClick={() => handleDeleteBoard(board.name)}
             >
               Delete
                         </Button>
@@ -64,17 +67,20 @@ const Board = ({ board }) => {
 
   return (
     <Card className="m-4">
-      <Link className="postLink" to={`/posts/${post.id}`}>
+      <Link className="postLink" to={`/boards/${board.id}`}>
         <CardBody>
           <CardTitle tag="h2">
             {/* The route to post details is here */}
-            <strong> {post.title}</strong>
+            <strong> {board.name}</strong>
           </CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Author: {post.userProfile.displayName}
+            Owner: {board.userProfile.displayName}
           </CardSubtitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Category: {post.category.name}
+            Deck Material: {board.deckMaterial.name}
+          </CardSubtitle>
+          <CardSubtitle tag="h6" className="mb-2 text-muted">
+            Board Type: {board.boardType.name}
           </CardSubtitle>
         </CardBody>
       </Link>
@@ -82,4 +88,4 @@ const Board = ({ board }) => {
   );
 };
 
-export default Post;
+export default Board;
