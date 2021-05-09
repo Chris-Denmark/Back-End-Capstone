@@ -91,22 +91,13 @@ const BoardEdit = () => {
                 </select>
               </FormGroup>
               <FormGroup>
-                <Label for="imageLocation">Image Location</Label>
-                <Input
-                  id="imageLocation"
-                  onChange={(e) => setImageLocation(e.target.value)}
-                  value={imageLocation}
-                />
-              </FormGroup>
-              <FormGroup>
-
-                <Label for="category">Category</Label><br></br>
-                <select id="category" onChange={(e) => setCategory(e.target.value)}>
-                  <option value="0">Select a category </option>
+                <Label for="boardType">Deck Material</Label><br></br>
+                <select id="boardType" onChange={(e) => setDeckMaterial(e.target.value)}>
+                  <option value="0">Select a Deck Material </option>
                   {
-                    categories.map(c => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
+                    deckMaterials.map(d => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
                       </option>
                     ))
                   }
@@ -123,4 +114,4 @@ const BoardEdit = () => {
   )
 }
 
-export default PostEdit;
+export default BoardEdit;
