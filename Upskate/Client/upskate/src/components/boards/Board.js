@@ -22,7 +22,7 @@ const Board = ({ board }) => {
   const history = useHistory();
 
   const editBoard = () => {
-    history.push(`/boards/edit/${board.id}`);
+    history.push(`/board/edit/${board.id}`);
   };
 
   const handleDeleteBoard = (boardName) => {
@@ -36,7 +36,7 @@ const Board = ({ board }) => {
     return (
       <Card className="m-4">
         <CardBody>
-          <Link className="postLink" to={`/boards/${board.id}`}>
+          <Link className="postLink" to={`/board/${board.id}`}>
             <CardTitle tag="h2">
               {/* The route to post details is here */}
               <strong> {board.name}</strong>
@@ -67,7 +67,7 @@ const Board = ({ board }) => {
 
   return (
     <Card className="m-4">
-      <Link className="postLink" to={`/boards/${board.id}`}>
+      <Link className="postLink" to={`/board/${board.id}`}>
         <CardBody>
           <CardTitle tag="h2">
             {/* The route to post details is here */}

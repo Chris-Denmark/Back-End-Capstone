@@ -11,11 +11,15 @@ import {
   Col,
 } from "reactstrap";
 import { BoardContext } from "../../providers/BoardProvider"
+import { BoardTypeContext } from "../../providers/BoardTypeProvider"
+import { DeckMaterialContext } from "../../providers/DeckMaterialProvider"
 import { useHistory } from 'react-router-dom';
 import { CardHeader } from "reactstrap";
 
 export const BoardForm = () => {
-  const { addBoard, getAllBoards } = useContext(BoardContext)
+  const { addBoard, getAllBoards } = useContext(BoardContext);
+  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext);
+  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext);
   const history = useHistory();
   // This is returning JSON
   const userProfile = sessionStorage.getItem("userProfile");
@@ -49,7 +53,7 @@ export const BoardForm = () => {
   const handleClickSaveBoard = () => {
 
     const name = board.name
-    const typeId = board.typeId
+    const boardTypeId = board.boardTypeId
     const deckMaterialId = board.deckMaterialId
 
 
@@ -57,7 +61,7 @@ export const BoardForm = () => {
       window.alert("Please type in name of board")
     }
 
-    else if (typeId === "") {
+    else if (boardTypeId === "") {
       window.alert("Please select a board type")
     }
 
@@ -152,10 +156,10 @@ export const BoardForm = () => {
             disabled={isLoading}
             onClick={(event) => {
               event.preventDefault();
-              handleClickSavePost();
+              handleClickSaveBoard();
             }}
           >
-            Add post
+            Add board
                 </Button>
         </CardBody>
       </Card>

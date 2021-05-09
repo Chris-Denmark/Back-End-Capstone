@@ -65,8 +65,6 @@ export const BoardProvider = (props) => {
         }
       })
         .then((res) => {
-          console.log(res, "response from get")
-
           return res.json()
         }
 

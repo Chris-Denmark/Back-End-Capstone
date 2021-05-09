@@ -4,6 +4,9 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Hello from "./Hello";
 import Login from "./Login";
 import Register from "./Register";
+import UserBoards from "./boards/UserBoards";
+import BoardEdit from "./boards/BoardEdit";
+
 
 
 export default function ApplicationViews() {
@@ -22,6 +25,14 @@ export default function ApplicationViews() {
 
         <Route path="/register">
           <Register />
+        </Route>
+
+        <Route path={`/myboards/:id`}>
+          <UserBoards />
+        </Route>
+
+        <Route path={`/board/edit/:id`}>
+          <BoardEdit />
         </Route>
       </Switch>
     </main>

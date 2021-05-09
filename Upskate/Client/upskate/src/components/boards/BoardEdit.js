@@ -10,10 +10,14 @@ import {
 } from "reactstrap";
 import { BoardContext } from '../../providers/BoardProvider';
 import { useHistory, useParams } from "react-router-dom";
+import { BoardTypeContext } from "../../providers/BoardTypeProvider"
+import { DeckMaterialContext } from "../../providers/DeckMaterialProvider"
 
 const BoardEdit = () => {
 
   const { updateBoard, getBoardById } = useContext(BoardContext) // Grabbing BoardContext to gain access to the updateBoard and getBoardById methods
+  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext);
+  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext);
   const { id } = useParams(); // Grabbing the ID with params
   const [board, setBoard] = useState({}); // Local state used to set the post object so it can be manipulated
   const history = useHistory(); // Use history to push the user to a different view
@@ -23,11 +27,6 @@ const BoardEdit = () => {
   const [boardType, setBoardType] = useState("");
   const [deckMaterial, setDeckMaterial] = useState("");
 
-  // This is returning JSON
-  const userProfile = sessionStorage.getItem("userProfile");
-  // Parsing the JSON returned above into an object so we can use it
-  var currentUser = JSON.parse(userProfile)
-
   // Onload useEffect to grab the proper board to edit by ID
   useEffect(() => {
     getBoardById(id).then(setBoard)
@@ -35,12 +34,12 @@ const BoardEdit = () => {
       .then(getAllDeckMaterials)
   }, []);
 
-  // Once the post has been set in state, update the form with previous post info
+  // Once the board has been set in state, update the form with previous board info
   useEffect(() => {
 
     setName(board.name)
-    setBoardType(board.boardType)
-    setDeckMaterial(board.deckMaterial)
+    setBoardType(board.boardTypeId)
+    setDeckMaterial(board.deckMaterialId)
   }, [board])
 
   // Submit button functionality for the form
@@ -58,14 +57,9 @@ const BoardEdit = () => {
     // Update the database with the new board
     updateBoard(updatedBoard).then((b) => {
       // Navigate the user back to the home route
-      history.push(`/boards/${id}`);
+      history.push(`/board/${id}`);
     });
   };
-
-  // Check if board is null and make sure current user owns the post
-  if (board === null || currentUser.id !== board.userProfileId) {
-    return null
-  }
 
   return (
     <div className="container pt-4">
@@ -82,9 +76,9 @@ const BoardEdit = () => {
                 <select id="boardType" onChange={(e) => setBoardType(e.target.value)}>
                   <option value="0">Select a board type </option>
                   {
-                    boardTypes.map(c => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
+                    boardTypes.map(b => (
+                      <option key={b.id} value={b.id}>
+                        {b.name}
                       </option>
                     ))
                   }
