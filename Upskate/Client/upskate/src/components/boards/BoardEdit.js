@@ -51,13 +51,13 @@ const BoardEdit = () => {
 
     // Adding the key/value pairs to the new board object
     updatedBoard.name = name
-    updatedBoard.boardType = boardType
-    updatedBoard.deckMaterial = deckMaterial
+    updatedBoard.boardTypeId = boardType
+    updatedBoard.deckMaterialId = deckMaterial
 
     // Update the database with the new board
     updateBoard(updatedBoard).then((b) => {
       // Navigate the user back to the home route
-      history.push(`/board/${id}`);
+      history.push(`/myboards/${id}`);
     });
   };
 

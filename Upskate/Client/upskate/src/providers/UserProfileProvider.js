@@ -89,9 +89,9 @@ export function UserProfileProvider(props) {
     })
   }
 
-  const getUserProfileById = (id) => {
+  const getUserProfileById = () => {
     return getToken().then((token) =>
-      fetch(`${apiUrl}/GetUserProfileById/${id}`, {
+      fetch(`${apiUrl}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
@@ -100,8 +100,19 @@ export function UserProfileProvider(props) {
     )
   }
 
+  const deleteUserProfile = (id) => {
+    return getToken().then((token) =>
+      fetch(`${apiUrl}/DeleteUserProfile/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+    )
+  }
+
   return (
-    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, getUserProfile, getAllProfiles, getUserProfileById }}>
+    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, getUserProfile, getAllProfiles, getUserProfileById, deleteUserProfile }}>
       {isFirebaseReady
         ? props.children
         : <Spinner className="app-spinner dark" />}

@@ -73,8 +73,8 @@ export const BoardForm = () => {
       setIsLoading(true);
 
       addBoard({
-        name: board.title,
-        typeId: board.typeId,
+        name: board.name,
+        boardTypeId: board.boardTypeId,
         deckMaterialId: board.deckMaterialId,
       })
         .then(setBoardObj)
@@ -85,7 +85,7 @@ export const BoardForm = () => {
 
   useEffect(() => {
     if (boardObj.id > 0) {
-      history.push(`/boards/${boardObj.id}`);
+      history.push(`/myboards/${currentUser.id}`);
     }
   }, [boardObj])
 

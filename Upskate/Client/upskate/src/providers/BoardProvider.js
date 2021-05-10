@@ -10,7 +10,7 @@ export const BoardProvider = (props) => {
 
   const getAllBoards = () => {
     return getToken().then((token) =>
-      fetch("/api/board", {
+      fetch("/api/Board", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

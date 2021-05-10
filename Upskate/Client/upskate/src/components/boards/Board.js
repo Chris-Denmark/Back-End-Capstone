@@ -28,46 +28,13 @@ const Board = ({ board }) => {
   const handleDeleteBoard = (boardName) => {
     if (window.confirm(`Are you sure you want to delete ${boardName}?`)) {
       deleteBoard(board.id).then(getAllBoards);
-      history.push("/boards");
+      history.push(`/myboards/${currentUser.id}`);
     }
   };
 
   if (currentUser.id === board.userProfileId) {
     return (
       <Card className="m-4">
-        <CardBody>
-          <Link className="postLink" to={`/board/${board.id}`}>
-            <CardTitle tag="h2">
-              {/* The route to post details is here */}
-              <strong> {board.name}</strong>
-            </CardTitle>
-            <CardSubtitle tag="h6" className="mb-2 text-muted">
-              Owner: {board.userProfile.displayName}
-            </CardSubtitle>
-            <CardSubtitle tag="h6" className="mb-2 text-muted">
-              Deck Material: {board.deckMaterial.name}
-            </CardSubtitle>
-            <CardSubtitle tag="h6" className="mb-2 text-muted">
-              Board Type: {board.boardType.name}
-            </CardSubtitle>
-          </Link>
-          <div style={{ float: "right" }}>
-            <Button onClick={editBoard}>Edit</Button>
-            <Button
-              color="danger"
-              onClick={() => handleDeleteBoard(board.name)}
-            >
-              Delete
-                        </Button>
-          </div>
-        </CardBody>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="m-4">
-      <Link className="postLink" to={`/board/${board.id}`}>
         <CardBody>
           <CardTitle tag="h2">
             {/* The route to post details is here */}
@@ -82,8 +49,37 @@ const Board = ({ board }) => {
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             Board Type: {board.boardType.name}
           </CardSubtitle>
+          <div style={{ float: "right" }}>
+            <Button onClick={editBoard}>Edit</Button>
+            <Button
+              color="danger"
+              onClick={() => handleDeleteBoard(board.name)}
+            >
+              Delete
+                      </Button>
+          </div>
         </CardBody>
-      </Link>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="m-4">
+      <CardBody>
+        <CardTitle tag="h2">
+          {/* The route to post details is here */}
+          <strong> {board.name}</strong>
+        </CardTitle>
+        <CardSubtitle tag="h6" className="mb-2 text-muted">
+          Owner: {board.userProfile.displayName}
+        </CardSubtitle>
+        <CardSubtitle tag="h6" className="mb-2 text-muted">
+          Deck Material: {board.deckMaterial.name}
+        </CardSubtitle>
+        <CardSubtitle tag="h6" className="mb-2 text-muted">
+          Board Type: {board.boardType.name}
+        </CardSubtitle>
+      </CardBody>
     </Card>
   );
 };

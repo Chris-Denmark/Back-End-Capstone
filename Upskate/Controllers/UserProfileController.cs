@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using Upskate.Models;
 using Upskate.Repositories;
+using System.Security.Claims;
 
 namespace Upskate.Controllers
 {
@@ -35,16 +36,16 @@ namespace Upskate.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetUserProfileById()
         {
-            var profiles = _userProfileRepository.GetUserProfiles();
-            return Ok(profiles);
-        }
-
-        [HttpGet("GetUserProfileById/{id}")]
-        public IActionResult GetUserProfileById(int id)
-        {
-            return Ok(_userProfileRepository.GetUserProfileById(id));
+            var currentUserProfile = GetCurrentUserProfile();
+            int userId = currentUserProfile.Id;
+            var userProfile = _userProfileRepository.GetUserProfileById(userId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         [HttpDelete("DeleteUserProfile/{id}")]
@@ -52,6 +53,12 @@ namespace Upskate.Controllers
         {
             _userProfileRepository.DeleteUserProfile(id);
             return NoContent();
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

@@ -6,6 +6,9 @@ import Login from "./Login";
 import Register from "./Register";
 import UserBoards from "./boards/UserBoards";
 import BoardEdit from "./boards/BoardEdit";
+import BoardList from "./boards/BoardList";
+import BoardForm from "./boards/BoardForm";
+import UserProfile from "./userprofiles/UserProfile";
 
 
 
@@ -33,6 +36,18 @@ export default function ApplicationViews() {
 
         <Route path={`/board/edit/:id`}>
           <BoardEdit />
+        </Route>
+
+        <Route path="/boards" exact>
+          <BoardList />
+        </Route>
+
+        <Route path="/board/add" exact>
+          <BoardForm />
+        </Route>
+
+        <Route path="/userprofile" exact>
+          <UserProfile />
         </Route>
       </Switch>
     </main>
