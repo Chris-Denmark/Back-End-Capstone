@@ -62,7 +62,7 @@ namespace Upskate.Controllers
         }
 
         [HttpGet("GetAllBoardsByUserId")]
-        public IActionResult GetAllBoardsByUserId(int id)
+        public IActionResult GetAllBoardsByUserId()
         {
             UserProfile user = GetCurrentUserProfile();
             return Ok(_boardRepository.GetCurrentUserBoards(user.Id));

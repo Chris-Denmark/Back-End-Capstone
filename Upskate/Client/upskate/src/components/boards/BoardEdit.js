@@ -20,12 +20,14 @@ const BoardEdit = () => {
   const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext);
   const { id } = useParams(); // Grabbing the ID with params
   const [board, setBoard] = useState({}); // Local state used to set the post object so it can be manipulated
+  console.log(board, "string")
   const history = useHistory(); // Use history to push the user to a different view
 
   // form field states
   const [name, setName] = useState("");
   const [boardType, setBoardType] = useState("");
   const [deckMaterial, setDeckMaterial] = useState("");
+
 
   // Onload useEffect to grab the proper board to edit by ID
   useEffect(() => {
@@ -74,7 +76,7 @@ const BoardEdit = () => {
               <FormGroup>
                 <Label for="boardType">Board Type</Label><br></br>
                 <select id="boardType" onChange={(e) => setBoardType(e.target.value)}>
-                  <option value="0">Select a board type </option>
+                  <option value="0">Select a board type</option>
                   {
                     boardTypes.map(b => (
                       <option key={b.id} value={b.id}>

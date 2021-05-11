@@ -1,16 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { BoardContext } from '../../providers/BoardProvider';
 import Board from "./Board";
 
 const UserBoards = () => {
 
-  const [userBoards, setUserBoards] = useState();
-  const { getUserBoards } = useContext(BoardContext);
-  const { id } = useParams();
+  const { userBoards, getUserBoards } = useContext(BoardContext);
 
   useEffect(() => {
-    getUserBoards(id).then(setUserBoards);
+    getUserBoards();
   }, []);
 
   return (
@@ -18,11 +15,9 @@ const UserBoards = () => {
       <div className="row justify-content-center">
         <div className="cards-column">
           {
-            userBoards ?
-              userBoards.map(board => {
-                return <Board key={board.id} board={board} />
-              })
-              : null
+            userBoards.map(board => {
+              return <Board key={board.id} board={board} />
+            })
           }
         </div>
       </div>

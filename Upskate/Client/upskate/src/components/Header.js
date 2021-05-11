@@ -51,6 +51,9 @@ export default function Header() {
                   <NavLink tag={RRNavLink} to={`/upkeeps`}>Upkeep Records</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={RRNavLink} to={`/upkeep/add`}>Add an Upkeep Record</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink tag={RRNavLink} to={`/userprofile`}>UserProfile</NavLink>
                 </NavItem>
               </>

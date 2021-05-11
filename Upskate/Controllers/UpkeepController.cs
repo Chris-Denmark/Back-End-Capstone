@@ -55,7 +55,7 @@ namespace Upskate.Controllers
         }
 
         [HttpGet("GetAllUpkeepsByUserId")]
-        public IActionResult GetAllUpkeepsByUserId(int id)
+        public IActionResult GetAllUpkeepsByUserId()
         {
             UserProfile user = GetCurrentUserProfile();
             return Ok(_upkeepRepository.GetCurrentUserUpkeeps(user.Id));

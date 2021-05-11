@@ -7,7 +7,7 @@ const BoardList = () => {
 
   useEffect(() => {
     getAllBoards();
-  }, []);
+  }, [boards]);
 
   return (
     <div className="container">

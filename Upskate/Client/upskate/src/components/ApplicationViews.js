@@ -9,6 +9,8 @@ import BoardEdit from "./boards/BoardEdit";
 import BoardList from "./boards/BoardList";
 import BoardForm from "./boards/BoardForm";
 import UserProfile from "./userprofiles/UserProfile";
+import UpkeepForm from "./upkeeps/UpkeepForm";
+import UserUpkeeps from "./upkeeps/UserUpkeepList";
 
 
 
@@ -49,6 +51,15 @@ export default function ApplicationViews() {
         <Route path="/userprofile" exact>
           <UserProfile />
         </Route>
+
+        <Route path="/upkeep/add" exact>
+          <UpkeepForm />
+        </Route>
+
+        <Route path="/upkeeps" exact>
+          <UserUpkeeps />
+        </Route>
+
       </Switch>
     </main>
   );
