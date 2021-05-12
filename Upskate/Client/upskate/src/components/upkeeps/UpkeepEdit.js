@@ -23,7 +23,7 @@ const UpkeepEdit = () => {
   const { userBoards, getUserBoards } = useContext(BoardContext) // Grabbing BoardContext to gain access to the userBoards array and getUserBoards method
   const { categories, getAllCategories } = useContext(CategoryContext); // Grabbing the CategoryContext to gain access to the categories array and the getAll Categories method.
   const { id } = useParams(); // Grabbing the ID with params
-  const [upkeep, setUpkeep] = useState({ board: { name: "" } }); // Local state used to set the post object so it can be manipulated
+  const [upkeep, setUpkeep] = useState({ board: { name: "" } }); // Local state used to set the upkeep object so it can be manipulated
   const history = useHistory(); // Use history to push the user to a different view
 
   // form field states
@@ -95,7 +95,7 @@ const UpkeepEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="dateCompleted">Date Completed:</Label><br></br>
-                <Input type="date" id="dateCompleted" value={moment(upkeep.dateCompleted).format(`yyyy-MM-DD`)} onChange={(e) => setDateCompleted(e.target.value)} />
+                <Input type="date" id="dateCompleted" value={moment(dateCompleted).format(`yyyy-MM-DD`)} onChange={(e) => setDateCompleted(e.target.value)} />
               </FormGroup>
               <FormGroup>
                 <Label for="board">Board:</Label><br></br>
