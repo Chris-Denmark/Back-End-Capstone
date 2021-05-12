@@ -3,8 +3,9 @@ import { BoardContext } from '../../providers/BoardProvider';
 import Board from "./Board";
 
 const BoardList = () => {
-  const { boards, getAllBoards } = useContext(BoardContext);
+  const { boards, getAllBoards } = useContext(BoardContext); // Uses BoardContext to get access to the boards array and the getAllBoards method.
 
+  // Runs when the boards array is rendered to get all of the boards.
   useEffect(() => {
     getAllBoards();
   }, [boards]);

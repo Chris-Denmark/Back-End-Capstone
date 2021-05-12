@@ -12,7 +12,7 @@ import { Link, useHistory } from "react-router-dom";
 import { BoardContext } from "../../providers/BoardProvider";
 
 const Board = ({ board }) => {
-  const { deleteBoard, getAllBoards } = useContext(BoardContext);
+  const { deleteBoard, getUserBoards } = useContext(BoardContext); // Uses BoardContext to get access to the methods created in the provider.
 
   // This is returning JSON
   const userProfile = sessionStorage.getItem("userProfile");
@@ -21,13 +21,16 @@ const Board = ({ board }) => {
 
   const history = useHistory();
 
+  // When the Edit button is clicked and this function runs it pushes the user to the url for editing a board.
   const editBoard = () => {
     history.push(`/board/edit/${board.id}`);
   };
 
+  // When the delete button is selected and this function runs the deleteBoard function by passing the board Id 
+  //through it and then getting all of the Users boards and then pushes the user to the URL for viewing the users boards
   const handleDeleteBoard = (boardName) => {
     if (window.confirm(`Are you sure you want to delete ${boardName}?`)) {
-      deleteBoard(board.id).then(getAllBoards);
+      deleteBoard(board.id).then(getUserBoards);
       history.push(`/myboards/${currentUser.id}`);
     }
   };
@@ -37,7 +40,6 @@ const Board = ({ board }) => {
       <Card className="m-4">
         <CardBody>
           <CardTitle tag="h2">
-            {/* The route to post details is here */}
             <strong> {board.name}</strong>
           </CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">

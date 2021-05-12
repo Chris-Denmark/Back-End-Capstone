@@ -15,9 +15,9 @@ import { DeckMaterialContext } from "../../providers/DeckMaterialProvider"
 
 const BoardEdit = () => {
 
-  const { updateBoard, getBoardById } = useContext(BoardContext) // Grabbing BoardContext to gain access to the updateBoard and getBoardById methods
-  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext);
-  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext);
+  const { updateBoard, getBoardById } = useContext(BoardContext) // Grabbing BoardContext to gain access to the updateBoard and getBoardById methods.
+  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext); // Grabbing BoardTypeContext to gain access to the boardTypes array and getAllBoardTypes method.
+  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext); // Grabbing DeckMaterialContext to gain access to the deckMaterials array and the getAllDeckMaterials method.
   const { id } = useParams(); // Grabbing the ID with params
   const [board, setBoard] = useState({}); // Local state used to set the post object so it can be manipulated
   console.log(board, "string")
@@ -75,7 +75,7 @@ const BoardEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="boardType">Board Type</Label><br></br>
-                <select id="boardType" onChange={(e) => setBoardType(e.target.value)}>
+                <select id="boardType" value={board.boardTypeId} onChange={(e) => setBoardType(e.target.value)}>
                   <option value="0">Select a board type</option>
                   {
                     boardTypes.map(b => (
@@ -88,7 +88,7 @@ const BoardEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="boardType">Deck Material</Label><br></br>
-                <select id="boardType" onChange={(e) => setDeckMaterial(e.target.value)}>
+                <select id="boardType" value={board.deckMaterialId} onChange={(e) => setDeckMaterial(e.target.value)}>
                   <option value="0">Select a Deck Material </option>
                   {
                     deckMaterials.map(d => (

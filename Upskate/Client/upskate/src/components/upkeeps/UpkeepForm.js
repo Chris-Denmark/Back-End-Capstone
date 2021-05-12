@@ -17,14 +17,13 @@ import { useHistory } from 'react-router-dom';
 import { CardHeader } from "reactstrap";
 
 export const UpkeepForm = () => {
-  const { addUpkeep, getUserUpkeeps } = useContext(UpkeepContext);
-  const { userBoards, getUserBoards } = useContext(BoardContext);
-  const { categories, getAllCategories } = useContext(CategoryContext);
+  const { addUpkeep, getUserUpkeeps } = useContext(UpkeepContext); // Grabbing the UpkeepContext to get access to the addUpkeep and getUserUpkeeps methods.
+  const { userBoards, getUserBoards } = useContext(BoardContext); // Grabbing the BoardContext to get access to the userBoards array and the getUserBoards method.
+  const { categories, getAllCategories } = useContext(CategoryContext); // Grabbing the CategoryContext to get access to the categories array and the getAllCategories method.
 
   const history = useHistory();
-  // This is returning JSON
 
-  // Set the initial state for the post.
+  // Set the initial state for the upkeep.
   const [upkeep, setUpkeep] = useState({
     description: "",
     categoryId: "",
@@ -34,8 +33,8 @@ export const UpkeepForm = () => {
 
 
   const [isLoading, setIsLoading] = useState(false);
-  const [upkeepObj, setUpkeepObj] = useState({});
 
+  // Updates the upkeep object any time the state of one of the form elements change.
   const handleControlledInputChange = (event) => {
     const newUpkeep = { ...upkeep }
 
@@ -43,12 +42,13 @@ export const UpkeepForm = () => {
     setUpkeep(newUpkeep)
   }
 
+  // Runs on initial render to get all of the categories and current users boards for the form drop downs.
   useEffect(() => {
     getAllCategories()
       .then(getUserBoards())
   }, [])
 
-  // Handle clicking the save button and updating the initial post object with the info from the form, then checking all the fields to make sure they have information in them.
+  // Handle clicking the save button and updating the initial upkeep object with the info from the form, then checking all the fields to make sure they have information in them.
   const handleClickSaveUpkeep = () => {
 
     const description = upkeep.description
@@ -78,6 +78,7 @@ export const UpkeepForm = () => {
         dateCompleted: upkeep.dateCompleted,
         boardId: upkeep.boardId
       })
+        .then(getUserUpkeeps)
         .then(history.push(`/upkeeps`))
     }
   }
@@ -126,7 +127,7 @@ export const UpkeepForm = () => {
             <Col>
               <FormGroup>
                 <Label for="dateCompleted">
-                  Date Completed:{" "}
+                  Date Completed:
                 </Label>
                 <Input
                   type="date"

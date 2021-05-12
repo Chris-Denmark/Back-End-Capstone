@@ -8,9 +8,11 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import moment from "moment";
 import { Link, useHistory } from "react-router-dom";
 import { UpkeepContext } from "../../providers/UpkeepProvider";
 
+// Creates the upkeep card to pass data into as well as handles the deletion of upkeeps and routes to the editing page.
 const Upkeep = ({ upkeep }) => {
   const { deleteUpkeep, getUserUpkeeps } = useContext(UpkeepContext);
 
@@ -21,16 +23,20 @@ const Upkeep = ({ upkeep }) => {
 
   const history = useHistory();
 
+  // when this function is run it pushes the user to the url for editing an upkeep.
   const editUpkeep = () => {
     history.push(`/upkeep/edit/${upkeep.id}`);
   };
 
+  // When this function is run it has the user confirm a delete for the selected upkeep and then gets the current users 
+  // upkeeps events and sets them to state using the getUserUpkeeps function from the provider.
   const handleDeleteUpkeep = (boardName) => {
     if (window.confirm(`Are you sure you want to delete this upkeep record for ${boardName}?`)) {
       deleteUpkeep(upkeep.id).then(getUserUpkeeps);
     }
   };
 
+  // If the upkeep in the list belongs to the current user then the card below renders with the edit and delete buttons on it.
   if (currentUser.id === upkeep.userProfileId) {
     return (
       <Card className="m-4">
@@ -45,7 +51,7 @@ const Upkeep = ({ upkeep }) => {
             Category: {upkeep.category.name}
           </CardSubtitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Date Completed: {upkeep.dateCompleted}
+            Date Completed: {moment(upkeep.dateCompleted).format(`yyyy-MM-DD`)}
           </CardSubtitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             Board Owner: {upkeep.userProfile.displayName}
@@ -64,6 +70,7 @@ const Upkeep = ({ upkeep }) => {
     );
   }
 
+  // If the upkeep belongs to anyone other than the current user, this card is rendered.
   return (
     <Card className="m-4">
       <CardBody>
@@ -77,7 +84,7 @@ const Upkeep = ({ upkeep }) => {
           Category: {upkeep.category.name}
         </CardSubtitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
-          Date Completed: {upkeep.dateCompleted}
+          Date Completed: {moment(upkeep.dateCompleted).format(`yyyy-MM-DD`)}
         </CardSubtitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
           Board Owner: {upkeep.userProfile.displayName}

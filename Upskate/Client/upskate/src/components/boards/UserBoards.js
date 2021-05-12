@@ -3,8 +3,7 @@ import { BoardContext } from '../../providers/BoardProvider';
 import Board from "./Board";
 
 const UserBoards = () => {
-
-  const { userBoards, getUserBoards } = useContext(BoardContext);
+  const { userBoards, getUserBoards } = useContext(BoardContext); // Uses BoardContext to get acces to the userBoards array and the getUserBoards method.
 
   useEffect(() => {
     getUserBoards();

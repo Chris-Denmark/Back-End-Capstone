@@ -11,6 +11,7 @@ import BoardForm from "./boards/BoardForm";
 import UserProfile from "./userprofiles/UserProfile";
 import UpkeepForm from "./upkeeps/UpkeepForm";
 import UserUpkeeps from "./upkeeps/UserUpkeepList";
+import UpkeepEdit from "./upkeeps/UpkeepEdit";
 
 
 
@@ -58,6 +59,10 @@ export default function ApplicationViews() {
 
         <Route path="/upkeeps" exact>
           <UserUpkeeps />
+        </Route>
+
+        <Route path={`/upkeep/edit/:id`}>
+          <UpkeepEdit />
         </Route>
 
       </Switch>

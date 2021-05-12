@@ -58,7 +58,7 @@ CREATE TABLE [Upkeep] (
   [Id] integer PRIMARY KEY identity NOT NULL,
   [Categoryid] integer NOT NULL,
   [Description] nvarchar(255) NOT NULL,
-  [DateCompleted] datetime,
+  [DateCompleted] date,
   [BoardId] integer NOT NULL,
   [UserProfileId] integer NOT NULL,
 

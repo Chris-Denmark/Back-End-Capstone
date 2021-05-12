@@ -204,7 +204,7 @@ namespace Upskate.Repositories
         {
             return new Upkeep()
             {
-                Id = reader.GetInt32(reader.GetOrdinal("BoardId")),
+                Id = reader.GetInt32(reader.GetOrdinal("UpkeepId")),
                 CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
                 Category = new Category()
                 {

@@ -17,9 +17,9 @@ import { useHistory } from 'react-router-dom';
 import { CardHeader } from "reactstrap";
 
 export const BoardForm = () => {
-  const { addBoard, getAllBoards } = useContext(BoardContext);
-  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext);
-  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext);
+  const { addBoard, getAllBoards } = useContext(BoardContext); // Grabbing BoardContext to gain access to the addBoard and getAllBoards methods.
+  const { boardTypes, getAllBoardTypes } = useContext(BoardTypeContext); // Grabbing BoardTypeContext to gain access to the boardTypes array and getAllBoardTypes method.
+  const { deckMaterials, getAllDeckMaterials } = useContext(DeckMaterialContext); // Grabbing DeckMaterialContext to gain access to the deckMaterials array and getAllDeckMaterials method.
   const history = useHistory();
   // This is returning JSON
   const userProfile = sessionStorage.getItem("userProfile");
@@ -37,6 +37,7 @@ export const BoardForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [boardObj, setBoardObj] = useState({});
 
+  // Creates and updates a new board object as the input fields on the form are updated with information.
   const handleControlledInputChange = (event) => {
     const newBoard = { ...board }
 
@@ -44,12 +45,13 @@ export const BoardForm = () => {
     setBoard(newBoard)
   }
 
+  // Runs when the initial state of the board object is set to get all of the board types and deck materials for the drop downs. 
   useEffect(() => {
     getAllBoardTypes()
       .then(getAllDeckMaterials())
   }, [board])
 
-  // Handle clicking the save button and updating the initial post object with the info from the form, then checking all the fields to make sure they have information in them.
+  // Handle clicking the save button and updating the initial board object with the info from the form, then checking all the fields to make sure they have information in them.
   const handleClickSaveBoard = () => {
 
     const name = board.name
@@ -83,6 +85,7 @@ export const BoardForm = () => {
     }
   }
 
+  // Runs when the board object is created and checks that the id property is above 0 then pushes the user to the list of the users boards.
   useEffect(() => {
     if (boardObj.id > 0) {
       history.push(`/myboards/${currentUser.id}`);
