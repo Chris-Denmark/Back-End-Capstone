@@ -82,7 +82,7 @@ const UpkeepEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="category">Category:</Label><br></br>
-                <select id="category" value={upkeep.categoryId} onChange={(e) => setCategory(e.target.value)}>
+                <select id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                   <option value="0">Select a Category</option>
                   {
                     categories.map(c => (
@@ -99,7 +99,7 @@ const UpkeepEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="board">Board:</Label><br></br>
-                <select id="board" value={upkeep.boardId} onChange={(e) => setBoard(e.target.value)}>
+                <select id="board" value={board} onChange={(e) => setBoard(e.target.value)}>
                   <option value="0">Select a Board</option>
                   {
                     userBoards.map(b => (

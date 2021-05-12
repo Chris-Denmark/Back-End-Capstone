@@ -75,7 +75,7 @@ const BoardEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="boardType">Board Type</Label><br></br>
-                <select id="boardType" value={board.boardTypeId} onChange={(e) => setBoardType(e.target.value)}>
+                <select id="boardType" value={boardType} onChange={(e) => setBoardType(e.target.value)}>
                   <option value="0">Select a board type</option>
                   {
                     boardTypes.map(b => (
@@ -88,7 +88,7 @@ const BoardEdit = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="boardType">Deck Material</Label><br></br>
-                <select id="boardType" value={board.deckMaterialId} onChange={(e) => setDeckMaterial(e.target.value)}>
+                <select id="boardType" value={deckMaterial} onChange={(e) => setDeckMaterial(e.target.value)}>
                   <option value="0">Select a Deck Material </option>
                   {
                     deckMaterials.map(d => (

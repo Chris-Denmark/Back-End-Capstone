@@ -141,7 +141,7 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        DELETE  FROM Board
+                        DELETE  FROM Upkeep
                         WHERE   UserProfileId = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -151,7 +151,7 @@ namespace Upskate.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        DELETE  FROM Upkeep
+                        DELETE  FROM Board
                         WHERE   UserProfileId = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
