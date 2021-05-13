@@ -27,7 +27,7 @@ const Board = ({ board }) => {
   };
 
   // When the delete button is selected and this function runs the deleteBoard function by passing the board Id 
-  //through it and then getting all of the Users boards and then pushes the user to the URL for viewing the users boards
+  // through it and then getting all of the Users boards and then pushes the user to the URL for viewing the users boards
   const handleDeleteBoard = (boardName) => {
     if (window.confirm(`Are you sure you want to delete ${boardName}?`)) {
       deleteBoard(board.id).then(getUserBoards);
@@ -46,10 +46,10 @@ const Board = ({ board }) => {
             Owner: {board.userProfile.displayName}
           </CardSubtitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Deck Material: {board.deckMaterial.name}
+            Board Type: {board.boardType.name}
           </CardSubtitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Board Type: {board.boardType.name}
+            Deck Material: {board.deckMaterial.name}
           </CardSubtitle>
           <div style={{ float: "right" }}>
             <Button onClick={editBoard}>Edit</Button>

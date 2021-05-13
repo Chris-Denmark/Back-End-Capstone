@@ -38,9 +38,9 @@ export default function Header() {
                 <NavItem>
                   <NavLink tag={RRNavLink} to="/">Home</NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink tag={RRNavLink} to={`/boards`}>All Boards</NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink tag={RRNavLink} to={`/myboards/${currentUser.id}`}>My Boards</NavLink>
                 </NavItem>
@@ -54,7 +54,7 @@ export default function Header() {
                   <NavLink tag={RRNavLink} to={`/upkeep/add`}>Add an Upkeep Record</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to={`/userprofile`}>UserProfile</NavLink>
+                  <NavLink tag={RRNavLink} to={`/userprofile`}>User Profile</NavLink>
                 </NavItem>
               </>
             }
