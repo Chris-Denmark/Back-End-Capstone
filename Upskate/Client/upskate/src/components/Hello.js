@@ -9,6 +9,6 @@ export default function Hello() {
       top: "50%",
       marginTop: "-0.5rem",
       textAlign: "center",
-    }}>hello</span>
+    }}>Welcome to Upskate! Click Add A Board to get started.</span>
   );
 }
