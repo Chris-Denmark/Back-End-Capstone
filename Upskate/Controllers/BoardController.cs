@@ -40,6 +40,14 @@ namespace Upskate.Controllers
 
         }
 
+        [HttpGet("GetBoardsByBoardTypeId")]
+        public IActionResult GetBoardsByBoardTypeId(int id)
+        {
+            var board = _boardRepository.GetBoardByBoardTypeId(id);
+            return Ok(board);
+
+        }
+
         [HttpPost]
         public IActionResult Post(Board board)
         {
