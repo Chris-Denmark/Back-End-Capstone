@@ -10,6 +10,7 @@ namespace Upskate.Repositories
         List<Board> GetAllBoards();
         Board GetBoardById(int id);
         List<Board> GetCurrentUserBoards(int userProfileId);
+        List<Board> GetBoardByBoardTypeId(int id);
         void UpdateBoard(Board board);
     }
 }

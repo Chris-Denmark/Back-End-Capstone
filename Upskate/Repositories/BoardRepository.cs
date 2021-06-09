@@ -118,6 +118,41 @@ namespace Upskate.Repositories
             }
         }
 
+        public List<Board> GetBoardByBoardTypeId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT b.Id AS BoardId, b.[Name] AS BoardName, b.BoardTypeId AS BoardType, 
+                              b.DeckMaterialId AS DeckMaterial,
+                              b.UserProfileId AS BoardUserProfileId, u.Id AS UserProfileId, u.DisplayName, u.Email, 
+                              dm.Id AS DeckMaterialId, dm.[Name] AS DeckMaterialName, t.Id AS BoardTypeId, t.[Name] AS BoardTypeName
+                        FROM Board b
+                            LEFT JOIN UserProfile u ON b.UserProfileId = u.Id
+                            LEFT JOIN DeckMaterial dm ON b.DeckMaterialId = dm.Id
+                            LEFT JOIN BoardType t ON b.BoardTypeId = t.Id
+                        WHERE b.BoardTypeId = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    var boards = new List<Board>();
+
+                    while (reader.Read())
+                    {
+                        boards.Add(NewBoardFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return boards;
+                }
+            }
+        }
+
         /// <summary>
         /// Adds a Board to the database.
         /// </summary>
